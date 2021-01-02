@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { Divider } from "semantic-ui-react";
 import Inputs from "./Inputs";
 import ComparisionTable from "./ComparisonTable";
 
@@ -70,12 +71,15 @@ const Comaparer = () => {
 
   return (
     <>
+      <Divider hidden />
       <Inputs
         getNextKey={addMovieAndReturnKey}
         changeMovie={changeMovie}
         removeMovie={removeMovie}
       />
+      <Divider hidden />
       <ComparisionTable movies={movies} />
+      <Divider hidden />
     </>
   );
 };

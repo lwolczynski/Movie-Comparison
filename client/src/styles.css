@@ -12,6 +12,34 @@ code {
     monospace;
 }
 
+/* Changes to Semantic UI */
+
+.ui.search {
+  min-width: 50%;
+}
+
+.ui.input {
+  min-width: 100%;
+}
+
+.ui.search > .results {
+  width: 100% !important;
+}
+
+.ui.search > .results > .result > .image > img {
+  float: right;
+}
+
+/* Custom styles */
+
+.no-padding-bottom {
+  padding-bottom: 0 !important;
+}
+
+.no-background {
+  background: none !important;
+}
+
 .full {
   height: 100%;
   width: 100%;

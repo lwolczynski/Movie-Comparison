@@ -41,7 +41,7 @@ const resultRenderer = ({ title, type, year, poster }) => (
 );
 
 // eslint-disable-next-line react/prop-types
-const Autocomplete = ({ changeMovie, explicitKey }) => {
+const Autocomplete = ({ changeMovie, explicitKey, children }) => {
   const [state, dispatch] = React.useReducer(exampleReducer, initialState);
   const { loading, results, value } = state;
 
@@ -89,24 +89,27 @@ const Autocomplete = ({ changeMovie, explicitKey }) => {
   );
 
   return (
-    <Grid>
-      <Grid.Column width={6}>
-        <Search
-          loading={loading}
-          onResultSelect={(e, data) => {
-            dispatch({
-              type: "UPDATE_SELECTION",
-              selection: data.result.title,
-            });
-            changeMovie(data.result.imdbid, explicitKey);
-          }}
-          onSearchChange={handleSearchChange}
-          resultRenderer={resultRenderer}
-          results={results}
-          value={value}
-        />
+    <Grid.Row className="no-padding-bottom">
+      <Grid.Column>
+        <div className="center">
+          <Search
+            loading={loading}
+            onResultSelect={(e, data) => {
+              dispatch({
+                type: "UPDATE_SELECTION",
+                selection: data.result.title,
+              });
+              changeMovie(data.result.imdbid, explicitKey);
+            }}
+            onSearchChange={handleSearchChange}
+            resultRenderer={resultRenderer}
+            results={results}
+            value={value}
+          />
+          {children}
+        </div>
       </Grid.Column>
-    </Grid>
+    </Grid.Row>
   );
 };
 
