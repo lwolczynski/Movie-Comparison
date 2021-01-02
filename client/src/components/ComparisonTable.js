@@ -134,7 +134,7 @@ const ComparisionTable = ({ movies }) => {
     // eslint-disable-next-line react/prop-types
     movies.map((movie, index) => (
       <Grid.Column key={index}>
-        <Segment raised textAlign="center" className="full">
+        <Segment textAlign="center" className="full">
           {movie.Title
             ? movie[row.jsonField]
               ? formatData(row.jsonField, movie[row.jsonField])

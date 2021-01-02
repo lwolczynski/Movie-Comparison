@@ -31,7 +31,7 @@ const Inputs = ({ getNextKey, changeMovie, removeMovie }) => {
 
   return (
     <Container text>
-      <Segment>
+      <Segment raised>
         <Grid textAlign="center">
           <Grid.Row className="no-padding-bottom">
             <Grid.Column>
