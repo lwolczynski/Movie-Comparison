@@ -16,7 +16,10 @@ const Comaparer = () => {
 
   const getMovieData = async (movie) => {
     const { data } = await axios.get(
-      `http://localhost:${process.env.REACT_APP_PORT}/get/${movie}`
+      `http://localhost:${process.env.REACT_APP_PORT}/get`,
+      {
+        params: { id: movie },
+      }
     );
     const RTScore = data.Ratings.find((o) => o.Source === "Rotten Tomatoes")
       ? data.Ratings.find((o) => o.Source === "Rotten Tomatoes").Value

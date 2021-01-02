@@ -8,21 +8,21 @@ const port = process.env.PORT;
 
 app.use(cors())
 
-app.get('/get/:id', async (req, res) => {
+app.get('/get', async (req, res) => {
   const { data } = await axios.get(process.env.PROVIDER, {
     params: {
       apikey: process.env.APIKEY,
-      i: req.params.id,
+      i: req.query.id,
     }
   });
   res.json(data);
 });
 
-app.get('/search/:search', async (req, res) => {
+app.get('/search', async (req, res) => {
   const { data } = await axios.get(process.env.PROVIDER, {
     params: {
       apikey: process.env.APIKEY,
-      s: req.params.search,
+      s: req.query.title,
     }
   });
   if (data.hasOwnProperty('Error')) {

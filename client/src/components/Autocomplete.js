@@ -56,8 +56,11 @@ const Autocomplete = ({ changeMovie, explicitKey }) => {
         dispatch({ type: "CLEAN_QUERY" });
         return;
       }
-      const { data } = await axios.get(
-        `http://localhost:${process.env.REACT_APP_PORT}/search/${dt.value}`
+      const {
+        data,
+      } = await axios.get(
+        `http://localhost:${process.env.REACT_APP_PORT}/search`,
+        { params: { title: dt.value } }
       );
 
       // API returns object with capitalized keys which has to be changed due to Semantic UI Search componenet usage
