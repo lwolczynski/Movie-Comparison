@@ -112,9 +112,16 @@ const formatData = (type, data) => {
       return <strong>{data}</strong>;
     case "Poster":
       if (data === "N/A") {
-        return <div className="no-image center">No image</div>;
+        return <div className="center">No image</div>;
       }
       return <Image src={data} />;
+    case "IMDBLink":
+      return (
+        // eslint-disable-next-line react/jsx-no-target-blank
+        <a style={{ display: "table-cell" }} href={data} target="_blank">
+          See on IMDB
+        </a>
+      );
     default:
       return <span>{data}</span>;
   }
