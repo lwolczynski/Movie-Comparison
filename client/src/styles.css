@@ -23,3 +23,7 @@ code {
   justify-content: center;
   align-items: center;
 }
+
+.ui.input.focus>input, .ui.input>input:focus {
+  border-color: inherit;
+}
