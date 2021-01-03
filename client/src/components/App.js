@@ -1,19 +1,19 @@
 import React, { createRef } from "react";
-import { Sticky } from "semantic-ui-react";
 import Navbar from "./Navbar";
 import Top from "./Top";
 import Comparer from "./Comparer";
 import Footer from "./Footer";
 
 const App = () => {
-  const contextRef = createRef();
+  const mainRef = createRef();
+  const comparerRef = createRef();
 
   return (
-    <div ref={contextRef}>
+    <div ref={mainRef}>
       <Top />
-      <Sticky context={contextRef}>
-        <Navbar />
-      </Sticky>
+      <div ref={comparerRef}>
+        <Navbar mainRef={mainRef} comparerRef={comparerRef} />
+      </div>
       <Comparer />
       <Footer />
     </div>
