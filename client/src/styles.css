@@ -47,6 +47,10 @@ code {
   border-color: inherit;
 }
 
+.ui.sticky {
+  z-index: 999;
+}
+
 
 /* Custom styles */
 
