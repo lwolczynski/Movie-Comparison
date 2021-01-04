@@ -13,7 +13,7 @@ const Navbar = ({ mainRef, comparerRef }) => {
       <Menu borderless attached>
         <Container className="center">
           <Menu.Item onClick={handleClick}>
-            <Image src="/images/pickamov.png" size="medium" />
+            <Image src="/images/logo.png" size="medium" />
           </Menu.Item>
         </Container>
       </Menu>
