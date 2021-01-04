@@ -30,6 +30,19 @@ code {
   float: right;
 }
 
+.ui.borderless {
+  border-left: none !important;
+  border-right: none !important;
+}
+
+.ui.fixed.sticky>.ui.borderless {
+  border-top: none !important;
+}
+
+.ui.input.focus>input, .ui.input>input:focus {
+  border-color: inherit;
+}
+
 
 /* Custom styles */
 
@@ -55,10 +68,6 @@ code {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.ui.input.focus>input, .ui.input>input:focus {
-  border-color: inherit;
 }
 
 
