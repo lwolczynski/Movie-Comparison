@@ -30,6 +30,7 @@ code {
   float: right;
 }
 
+
 /* Custom styles */
 
 .no-animation {
@@ -58,4 +59,36 @@ code {
 
 .ui.input.focus>input, .ui.input>input:focus {
   border-color: inherit;
+}
+
+
+/* Responsiveness for the table */
+/* below 768px; 768px - 991px; 992px - 1200px; above 1200px */
+
+.ui.grid>.row>.column {
+  width: 100% !important;
+}
+
+@media (min-width: 768px) {
+  .ui.grid.two>.row>.column {
+    width: 50% !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .ui.grid.three>.row>.column {
+    width: 33.33333333% !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .ui.grid.four>.row>.column {
+    width: 25% !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .ui.grid.five>.row>.column {
+    width: 20% !important;
+  }
 }
