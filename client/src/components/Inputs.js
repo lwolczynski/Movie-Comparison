@@ -36,8 +36,7 @@ const Inputs = ({ getNextKey, changeMovie, removeMovie }) => {
           <Grid.Row className="no-padding-bottom">
             <Grid.Column>
               <Header as="h3">
-                Search for {keys.length}{" "}
-                {keys.length === 1 ? "movie" : "movies"}
+                Search for {keys.length === 1 ? "a movie" : "movies"}
               </Header>
             </Grid.Column>
           </Grid.Row>
