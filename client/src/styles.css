@@ -64,6 +64,18 @@ code {
 
 /* Custom styles */
 
+.underline-dotted {
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+}
+
+.p-landing {
+  text-align: center;
+  font-weight: 600;
+  font-size: 22px;
+  margin-top: 1em;
+}
+
 .carousel-image {
   max-height: 400px;
 }

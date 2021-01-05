@@ -9,10 +9,9 @@ const Top = () => (
       Pick-a-mov
     </Header>
     <Carousel />
-    <p>
+    <p className="p-landing">
       Can&apos;t decide between films? Compare them and{" "}
-      <span style={{ textDecorationLine: "underline" }}>pick a mov</span>ie to
-      watch!
+      <span className="underline-dotted">pick a mov</span>ie to watch!
     </p>
     <Divider hidden />
   </Container>
