@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'motion_picture_ratingsregular';
+  src: local('motion_picture_ratingsregular'), url('./fonts/motion_picture_ratings-webfont.woff2') format('woff2'),
+       local('motion_picture_ratingsregular'), url('./fonts/motion_picture_ratings-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 html, body {
   font-size: 16px;
 }
@@ -76,6 +84,13 @@ code {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.brand {
+  font-family: 'motion_picture_ratingsregular' !important;
+  font-weight: 400 !important;
+  font-size: 2.5rem !important;
+  text-transform: uppercase !important;
 }
 
 
