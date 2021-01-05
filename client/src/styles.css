@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans&display=swap');
+
 @font-face {
   font-family: 'motion_picture_ratingsregular';
   src: local('motion_picture_ratingsregular'), url('./fonts/motion_picture_ratings-webfont.woff2') format('woff2'),
@@ -12,7 +14,7 @@ html, body {
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: -apple-system, BlinkMacSystemFont, 'Open Sans', 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
