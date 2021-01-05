@@ -62,6 +62,14 @@ code {
 
 /* Custom styles */
 
+.carousel-image {
+  max-height: 400px;
+}
+
+.carousel-div {
+  padding: 5px;
+}
+
 .no-animation {
   animation: none !important;
 }
