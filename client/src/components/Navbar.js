@@ -4,12 +4,14 @@ import { Menu, Container, Image, Sticky } from "semantic-ui-react";
 // eslint-disable-next-line react/prop-types
 const Navbar = ({ mainRef, comparerRef }) => {
   const handleClick = () => {
-    // eslint-disable-next-line react/prop-types
-    comparerRef.current.scrollIntoView({ behavior: "smooth" });
+    const y =
+      // eslint-disable-next-line react/prop-types
+      comparerRef.current.getBoundingClientRect().top + window.pageYOffset + 1;
+    window.scrollTo({ top: y, behavior: "smooth" });
   };
 
   return (
-    <Sticky context={mainRef}>
+    <Sticky context={mainRef} offset={-1}>
       <Menu borderless attached>
         <Container className="center">
           <Menu.Item onClick={handleClick}>

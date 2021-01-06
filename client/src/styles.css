@@ -49,10 +49,6 @@ code {
   border-right: none !important;
 }
 
-.ui.fixed.sticky>.ui.borderless {
-  border-top: none !important;
-}
-
 .ui.input.focus>input, .ui.input>input:focus {
   border-color: inherit;
 }
