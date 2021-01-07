@@ -25,6 +25,8 @@ const settings = {
   slidesToScroll: 1,
   variableWidth: true,
   autoplaySpeed: 3000,
+  nextArrow: <></>,
+  prevArrow: <></>,
   cssEase: "linear",
 };
 

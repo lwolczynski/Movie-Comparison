@@ -58,6 +58,13 @@ code {
 }
 
 
+/* Changes to Slick */
+
+.slick-track {
+  display: flex !important;
+}
+
+
 /* Custom styles */
 
 .underline-dotted {
