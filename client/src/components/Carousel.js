@@ -1,17 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Image, Card } from "semantic-ui-react";
 import Slider from "react-slick";
 import carouselData from "./carouselData";
+import PosterContext from "./PosterContext";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const generateCards = () => {
+  const { setPosterClicked } = useContext(PosterContext);
+
   const shuffled = carouselData.sort(() => 0.5 - Math.random());
   const selected = shuffled.slice(0, 15);
   return selected.map((item, index) => (
     <div className="carousel-div" key={index}>
-      <Card onClick={() => console.log("!")}>
+      <Card onClick={() => setPosterClicked({ ...item })}>
         <Image className="carousel-image" src={item.poster} />
       </Card>
     </div>
