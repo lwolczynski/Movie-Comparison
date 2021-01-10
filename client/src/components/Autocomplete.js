@@ -62,11 +62,7 @@ const Autocomplete = ({
 
   const searchRef = createRef();
 
-  // eslint-disable-next-line no-unused-vars
-  const handleForcedSearchChange = useCallback(async (e, dt) => {
-    clearTimeout(timeoutRef.current);
-    dispatch({ type: "CHANGE_SEARCH", query: dt.value });
-
+  const mainSearchPart = async (dt) => {
     const {
       data,
     } = await axios.get(
@@ -89,6 +85,14 @@ const Autocomplete = ({
       // Add key to object entries
       results: modifiedData.map((obj, index) => ({ ...obj, key: index })),
     });
+  };
+
+  // eslint-disable-next-line no-unused-vars
+  const handleForcedSearchChange = useCallback(async (e, dt) => {
+    clearTimeout(timeoutRef.current);
+    dispatch({ type: "CHANGE_SEARCH", query: dt.value });
+
+    mainSearchPart(dt);
   }, []);
 
   const handleSearchChange = useCallback((e, dt) => {
@@ -100,28 +104,8 @@ const Autocomplete = ({
         dispatch({ type: "CLEAN_QUERY" });
         return;
       }
-      const {
-        data,
-      } = await axios.get(
-        `http://localhost:${process.env.REACT_APP_PORT}/search`,
-        { params: { title: dt.value } }
-      );
 
-      // API returns object with capitalized keys which has to be changed due to Semantic UI Search componenet usage
-      const modifiedData = data.map((item) => {
-        const entries = Object.entries(item);
-        const lowercaseEntries = entries.map((entry) => [
-          entry[0].toLowerCase(),
-          entry[1],
-        ]);
-        return Object.fromEntries(lowercaseEntries);
-      });
-
-      dispatch({
-        type: "FINISH_SEARCH",
-        // Add key to object entries
-        results: modifiedData.map((obj, index) => ({ ...obj, key: index })),
-      });
+      mainSearchPart(dt);
     }, 500);
   }, []);
 
