@@ -1,108 +1,67 @@
-/* eslint-disable no-nested-ternary */
 /* eslint-disable react/prop-types */
 import React from "react";
-import {
-  Container,
-  Grid,
-  Segment,
-  Placeholder,
-  Header,
-  Image,
-} from "semantic-ui-react";
-
-const printPlaceholder = (child) => (
-  <Placeholder className="no-animation">
-    <Placeholder.Header>{child}</Placeholder.Header>
-  </Placeholder>
-);
-
-const paragraphPlaceholder = printPlaceholder(
-  <Placeholder.Paragraph>
-    <Placeholder.Line />
-    <Placeholder.Line />
-    <Placeholder.Line />
-    <Placeholder.Line />
-  </Placeholder.Paragraph>
-);
-
-const imagePlaceholder = printPlaceholder(<Placeholder.Image />);
-
-const linePlaceholder = (len = "medium") =>
-  printPlaceholder(<Placeholder.Line length={len} />);
+import { Container, Grid, Segment, Header, Image } from "semantic-ui-react";
 
 const rows = [
-  { name: "Title", jsonField: "Title", placeholder: linePlaceholder("long") },
-  { name: "Poster", jsonField: "Poster", placeholder: imagePlaceholder },
-  { name: "Plot", jsonField: "Plot", placeholder: paragraphPlaceholder },
+  { name: "Title", jsonField: "Title" },
+  { name: "Poster", jsonField: "Poster" },
+  { name: "Plot", jsonField: "Plot" },
   {
     name: "Genre",
     jsonField: "Genre",
-    placeholder: linePlaceholder("very long"),
   },
   {
     name: "Runtime",
     jsonField: "Runtime",
-    placeholder: linePlaceholder("short"),
   },
-  { name: "Year", jsonField: "Year", placeholder: linePlaceholder("short") },
+  { name: "Year", jsonField: "Year" },
   {
     name: "Actors",
     jsonField: "Actors",
-    placeholder: linePlaceholder("very long"),
   },
   {
     name: "Director",
     jsonField: "Director",
-    placeholder: linePlaceholder("long"),
   },
   {
     name: "IMDB score",
     jsonField: "IMDBScore",
-    placeholder: linePlaceholder("short"),
   },
   {
     name: "Rotten Tomatoes score",
     jsonField: "RTScore",
-    placeholder: linePlaceholder("short"),
   },
-  { name: "Metascore", jsonField: "Metascore", placeholder: linePlaceholder() },
+  { name: "Metascore", jsonField: "Metascore" },
   {
     name: "Box Office",
     jsonField: "BoxOffice",
-    placeholder: linePlaceholder("short"),
   },
   {
     name: "Rated",
     jsonField: "Rated",
-    placeholder: linePlaceholder("very short"),
   },
   {
     name: "Country",
     jsonField: "Country",
-    placeholder: linePlaceholder("medium"),
   },
   {
     name: "Language",
     jsonField: "Language",
-    placeholder: linePlaceholder("medium"),
   },
-  { name: "Awards", jsonField: "Awards", placeholder: linePlaceholder("long") },
-  { name: "Writer", jsonField: "Writer", placeholder: linePlaceholder("long") },
+  { name: "Awards", jsonField: "Awards" },
+  { name: "Writer", jsonField: "Writer" },
   {
     name: "Released",
     jsonField: "Released",
-    placeholder: linePlaceholder("medium"),
   },
-  { name: "Type", jsonField: "Type", placeholder: linePlaceholder("short") },
+  { name: "Type", jsonField: "Type" },
   {
     name: "Total seasons",
     jsonField: "totalSeasons",
-    placeholder: linePlaceholder("very short"),
   },
   {
     name: "See on IMDB",
     jsonField: "IMDBLink",
-    placeholder: linePlaceholder("medium"),
   },
 ];
 
@@ -127,7 +86,15 @@ const formatData = (type, data) => {
   }
 };
 
-// eslint-disable-next-line react/prop-types
+const printMovieRow = (movie, row) => {
+  if (movie.Title) {
+    return movie[row.jsonField]
+      ? formatData(row.jsonField, movie[row.jsonField])
+      : "N/A";
+  }
+  return null;
+};
+
 const ComparisionTable = ({ movies }) => {
   const printFirstColumn = (row) => (
     <Grid.Column>
@@ -138,16 +105,9 @@ const ComparisionTable = ({ movies }) => {
   );
 
   const printMovieColumns = (row) =>
-    // eslint-disable-next-line react/prop-types
     movies.map((movie, index) => (
       <Grid.Column key={index}>
-        <Segment className="full">
-          {movie.Title
-            ? movie[row.jsonField]
-              ? formatData(row.jsonField, movie[row.jsonField])
-              : "N/A"
-            : row.placeholder}
-        </Segment>
+        <Segment className="full">{printMovieRow(movie, row)}</Segment>
       </Grid.Column>
     ));
 
