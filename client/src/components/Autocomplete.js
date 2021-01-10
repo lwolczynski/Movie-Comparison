@@ -1,6 +1,7 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { Search, Grid } from "semantic-ui-react";
+import PosterContext from "./PosterContext";
 
 const initialState = {
   loading: false,
@@ -14,6 +15,8 @@ function exampleReducer(state, action) {
       return initialState;
     case "START_SEARCH":
       return { ...state, loading: true, value: action.query };
+    case "CHANGE_SEARCH":
+      return { ...state, loading: false, value: action.query };
     case "FINISH_SEARCH":
       return { ...state, loading: false, results: action.results };
     case "UPDATE_SELECTION":
@@ -41,13 +44,44 @@ const resultRenderer = ({ title, type, year, poster }) => (
 );
 
 // eslint-disable-next-line react/prop-types
-const Autocomplete = ({ changeMovie, explicitKey, children }) => {
+const Autocomplete = ({ changeMovie, explicitKey, acIndex, children }) => {
   const [state, dispatch] = React.useReducer(exampleReducer, initialState);
   const { loading, results, value } = state;
 
   const timeoutRef = React.useRef();
 
+  const searchRef = React.createRef();
+
+  const handleForcedSearchChange = React.useCallback(async (e, dt) => {
+    clearTimeout(timeoutRef.current);
+    dispatch({ type: "CHANGE_SEARCH", query: dt.value });
+
+    const {
+      data,
+    } = await axios.get(
+      `http://localhost:${process.env.REACT_APP_PORT}/search`,
+      { params: { title: dt.value } }
+    );
+
+    // API returns object with capitalized keys which has to be changed due to Semantic UI Search componenet usage
+    const modifiedData = data.map((item) => {
+      const entries = Object.entries(item);
+      const lowercaseEntries = entries.map((entry) => [
+        entry[0].toLowerCase(),
+        entry[1],
+      ]);
+      return Object.fromEntries(lowercaseEntries);
+    });
+
+    dispatch({
+      type: "FINISH_SEARCH",
+      // Add key to object entries
+      results: modifiedData.map((obj, index) => ({ ...obj, key: index })),
+    });
+  }, []);
+
   const handleSearchChange = React.useCallback((e, dt) => {
+    console.log("!");
     clearTimeout(timeoutRef.current);
     dispatch({ type: "START_SEARCH", query: dt.value });
 
@@ -81,6 +115,16 @@ const Autocomplete = ({ changeMovie, explicitKey, children }) => {
     }, 500);
   }, []);
 
+  if (acIndex === 0) {
+    const { posterClicked } = useContext(PosterContext);
+    useEffect(() => {
+      if (posterClicked.id)
+        handleForcedSearchChange(searchRef.current, {
+          value: posterClicked.name,
+        });
+    }, [posterClicked]);
+  }
+
   useEffect(
     () => () => {
       clearTimeout(timeoutRef.current);
@@ -93,6 +137,7 @@ const Autocomplete = ({ changeMovie, explicitKey, children }) => {
       <Grid.Column>
         <div className="center">
           <Search
+            ref={searchRef}
             loading={loading}
             onResultSelect={(e, data) => {
               dispatch({

@@ -17,8 +17,13 @@ const Inputs = ({ getNextKey, changeMovie, removeMovie }) => {
   };
 
   const renderInputs = () =>
-    keys.map((key) => (
-      <Autocomplete changeMovie={changeMovie} key={key} explicitKey={key}>
+    keys.map((key, index) => (
+      <Autocomplete
+        changeMovie={changeMovie}
+        key={key}
+        explicitKey={key}
+        acIndex={index}
+      >
         <Button
           circular
           className="no-background"

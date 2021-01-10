@@ -18,7 +18,7 @@ const App = () => {
         <div ref={comparerRef}>
           <Navbar mainRef={mainRef} comparerRef={comparerRef} />
         </div>
-        <Comparer />
+        <Comparer comparerRef={comparerRef} />
       </PosterContext.Provider>
       <Footer />
     </div>

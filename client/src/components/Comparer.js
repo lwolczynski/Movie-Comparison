@@ -1,12 +1,16 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Divider } from "semantic-ui-react";
 import Inputs from "./Inputs";
 import ComparisionTable from "./ComparisonTable";
+import PosterContext from "./PosterContext";
 
-const Comaparer = () => {
+// eslint-disable-next-line react/prop-types
+const Comaparer = ({ comparerRef }) => {
   const [nextKey, setNextKey] = useState(2);
   const [movies, setMovies] = useState([{ key: 0 }, { key: 1 }]);
+
+  const { posterClicked } = useContext(PosterContext);
 
   const addMovieAndReturnKey = () => {
     const oldValue = nextKey;
@@ -56,6 +60,14 @@ const Comaparer = () => {
       }, [])
     );
   };
+
+  useEffect(() => {
+    if (posterClicked.id) changeMovie(posterClicked.id, movies[0].key);
+    const y =
+      // eslint-disable-next-line react/prop-types
+      comparerRef.current.getBoundingClientRect().top + window.pageYOffset + 1;
+    window.scrollTo({ top: y, behavior: "smooth" });
+  }, [posterClicked]);
 
   const removeMovie = (keyToRemove) => {
     // eslint-disable-next-line radix
