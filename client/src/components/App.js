@@ -4,7 +4,7 @@ import Top from "./Top";
 import Comparer from "./Comparer";
 import Footer from "./Footer";
 import PosterContext from "./PosterContext";
-import scrollToElement from "../utlis/utlis";
+import scrollToElement from "../utils/utils";
 
 const App = () => {
   const mainRef = createRef();
