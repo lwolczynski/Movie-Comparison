@@ -88,10 +88,6 @@ code {
   padding: 5px;
 }
 
-.no-animation {
-  animation: none !important;
-}
-
 .no-padding-bottom {
   padding-bottom: 0 !important;
 }

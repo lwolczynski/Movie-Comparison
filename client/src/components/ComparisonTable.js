@@ -107,7 +107,7 @@ const ComparisionTable = ({ movies }) => {
   const printMovieColumns = (row) =>
     movies.map((movie, index) => (
       <Grid.Column key={index}>
-        <Segment className="full">{printMovieRow(movie, row)}</Segment>
+        <Segment className="full center">{printMovieRow(movie, row)}</Segment>
       </Grid.Column>
     ));
 
