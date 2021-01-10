@@ -63,11 +63,13 @@ const Autocomplete = ({
   const searchRef = createRef();
 
   const mainSearchPart = async (dt) => {
-    const {
-      data,
-    } = await axios.get(
+    const { data } = await axios.get(
       `http://localhost:${process.env.REACT_APP_PORT}/search`,
-      { params: { title: dt.value } }
+      {
+        params: {
+          title: dt.value.replace(/[^\w\s]|_/g, "").replace(/\s+/g, " "),
+        },
+      }
     );
 
     // API returns object with capitalized keys which has to be changed due to Semantic UI Search componenet usage
