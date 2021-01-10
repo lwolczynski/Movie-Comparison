@@ -1,5 +1,12 @@
 import axios from "axios";
-import React, { useEffect, useContext } from "react";
+import React, {
+  useEffect,
+  useContext,
+  useReducer,
+  useRef,
+  useCallback,
+  createRef,
+} from "react";
 import { Search, Grid } from "semantic-ui-react";
 import PosterContext from "./PosterContext";
 
@@ -9,7 +16,7 @@ const initialState = {
   value: "",
 };
 
-function exampleReducer(state, action) {
+const searchReducer = (state, action) => {
   switch (action.type) {
     case "CLEAN_QUERY":
       return initialState;
@@ -21,11 +28,10 @@ function exampleReducer(state, action) {
       return { ...state, loading: false, results: action.results };
     case "UPDATE_SELECTION":
       return { ...state, value: action.selection };
-
     default:
       throw new Error();
   }
-}
+};
 
 const resultRenderer = ({ title, type, year, poster }) => (
   <>
@@ -45,14 +51,14 @@ const resultRenderer = ({ title, type, year, poster }) => (
 
 // eslint-disable-next-line react/prop-types
 const Autocomplete = ({ changeMovie, explicitKey, acIndex, children }) => {
-  const [state, dispatch] = React.useReducer(exampleReducer, initialState);
+  const [state, dispatch] = useReducer(searchReducer, initialState);
   const { loading, results, value } = state;
 
-  const timeoutRef = React.useRef();
+  const timeoutRef = useRef();
 
-  const searchRef = React.createRef();
+  const searchRef = createRef();
 
-  const handleForcedSearchChange = React.useCallback(async (e, dt) => {
+  const handleForcedSearchChange = useCallback(async (e, dt) => {
     clearTimeout(timeoutRef.current);
     dispatch({ type: "CHANGE_SEARCH", query: dt.value });
 
@@ -80,8 +86,7 @@ const Autocomplete = ({ changeMovie, explicitKey, acIndex, children }) => {
     });
   }, []);
 
-  const handleSearchChange = React.useCallback((e, dt) => {
-    console.log("!");
+  const handleSearchChange = useCallback((e, dt) => {
     clearTimeout(timeoutRef.current);
     dispatch({ type: "START_SEARCH", query: dt.value });
 
@@ -125,12 +130,9 @@ const Autocomplete = ({ changeMovie, explicitKey, acIndex, children }) => {
     }, [posterClicked]);
   }
 
-  useEffect(
-    () => () => {
-      clearTimeout(timeoutRef.current);
-    },
-    []
-  );
+  useEffect(() => {
+    clearTimeout(timeoutRef.current);
+  }, []);
 
   return (
     <Grid.Row className="no-padding-bottom">
