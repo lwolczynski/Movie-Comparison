@@ -4,6 +4,7 @@ import Top from "./Top";
 import Comparer from "./Comparer";
 import Footer from "./Footer";
 import PosterContext from "./PosterContext";
+import scrollToElement from "../utlis/utlis";
 
 const App = () => {
   const mainRef = createRef();
@@ -16,9 +17,12 @@ const App = () => {
       <PosterContext.Provider value={{ posterClicked, setPosterClicked }}>
         <Top />
         <div ref={comparerRef}>
-          <Navbar mainRef={mainRef} comparerRef={comparerRef} />
+          <Navbar
+            mainRef={mainRef}
+            scrollToMain={() => scrollToElement(comparerRef.current)}
+          />
         </div>
-        <Comparer comparerRef={comparerRef} />
+        <Comparer scrollToMain={() => scrollToElement(comparerRef.current)} />
       </PosterContext.Provider>
       <Footer />
     </div>

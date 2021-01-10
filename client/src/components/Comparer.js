@@ -6,7 +6,7 @@ import ComparisionTable from "./ComparisonTable";
 import PosterContext from "./PosterContext";
 
 // eslint-disable-next-line react/prop-types
-const Comaparer = ({ comparerRef }) => {
+const Comaparer = ({ scrollToMain }) => {
   const [nextKey, setNextKey] = useState(2);
   const [movies, setMovies] = useState([{ key: 0 }, { key: 1 }]);
   const [movieToReplace, setMovieToReplace] = useState({});
@@ -74,12 +74,7 @@ const Comaparer = ({ comparerRef }) => {
         key: movies[movieIndexToChange].key,
       });
       changeMovie(posterClicked.id, movies[movieIndexToChange].key);
-      const y =
-        // eslint-disable-next-line react/prop-types
-        comparerRef.current.getBoundingClientRect().top +
-        window.pageYOffset +
-        1;
-      window.scrollTo({ top: y, behavior: "smooth" });
+      scrollToMain();
     }
   }, [posterClicked]);
 
