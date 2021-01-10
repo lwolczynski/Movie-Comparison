@@ -1,9 +1,9 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import { Container, Segment, Button, Grid, Header } from "semantic-ui-react";
 import Autocomplete from "./Autocomplete";
 
-// eslint-disable-next-line react/prop-types
-const Inputs = ({ getNextKey, changeMovie, removeMovie }) => {
+const Inputs = ({ getNextKey, changeMovie, removeMovie, movieToReplace }) => {
   const [keys, setKeys] = useState([0, 1]);
 
   const handleAddClick = () => {
@@ -17,12 +17,12 @@ const Inputs = ({ getNextKey, changeMovie, removeMovie }) => {
   };
 
   const renderInputs = () =>
-    keys.map((key, index) => (
+    keys.map((key) => (
       <Autocomplete
         changeMovie={changeMovie}
         key={key}
         explicitKey={key}
-        acIndex={index}
+        movieToReplace={movieToReplace}
       >
         <Button
           circular

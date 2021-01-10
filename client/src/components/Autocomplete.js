@@ -1,14 +1,14 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-undef */
 import axios from "axios";
 import React, {
   useEffect,
-  useContext,
   useReducer,
   useRef,
   useCallback,
   createRef,
 } from "react";
 import { Search, Grid } from "semantic-ui-react";
-import PosterContext from "./PosterContext";
 
 const initialState = {
   loading: false,
@@ -49,8 +49,12 @@ const resultRenderer = ({ title, type, year, poster }) => (
   </>
 );
 
-// eslint-disable-next-line react/prop-types
-const Autocomplete = ({ changeMovie, explicitKey, acIndex, children }) => {
+const Autocomplete = ({
+  changeMovie,
+  explicitKey,
+  movieToReplace,
+  children,
+}) => {
   const [state, dispatch] = useReducer(searchReducer, initialState);
   const { loading, results, value } = state;
 
@@ -58,6 +62,7 @@ const Autocomplete = ({ changeMovie, explicitKey, acIndex, children }) => {
 
   const searchRef = createRef();
 
+  // eslint-disable-next-line no-unused-vars
   const handleForcedSearchChange = useCallback(async (e, dt) => {
     clearTimeout(timeoutRef.current);
     dispatch({ type: "CHANGE_SEARCH", query: dt.value });
@@ -120,15 +125,12 @@ const Autocomplete = ({ changeMovie, explicitKey, acIndex, children }) => {
     }, 500);
   }, []);
 
-  if (acIndex === 0) {
-    const { posterClicked } = useContext(PosterContext);
-    useEffect(() => {
-      if (posterClicked.id)
-        handleForcedSearchChange(searchRef.current, {
-          value: posterClicked.name,
-        });
-    }, [posterClicked]);
-  }
+  useEffect(() => {
+    if (movieToReplace && explicitKey === movieToReplace.key)
+      handleForcedSearchChange(searchRef.current, {
+        value: movieToReplace.title,
+      });
+  }, [movieToReplace]);
 
   useEffect(() => {
     clearTimeout(timeoutRef.current);

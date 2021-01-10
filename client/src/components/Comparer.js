@@ -9,6 +9,7 @@ import PosterContext from "./PosterContext";
 const Comaparer = ({ comparerRef }) => {
   const [nextKey, setNextKey] = useState(2);
   const [movies, setMovies] = useState([{ key: 0 }, { key: 1 }]);
+  const [movieToReplace, setMovieToReplace] = useState({});
 
   const { posterClicked } = useContext(PosterContext);
 
@@ -62,11 +63,24 @@ const Comaparer = ({ comparerRef }) => {
   };
 
   useEffect(() => {
-    if (posterClicked.id) changeMovie(posterClicked.id, movies[0].key);
-    const y =
-      // eslint-disable-next-line react/prop-types
-      comparerRef.current.getBoundingClientRect().top + window.pageYOffset + 1;
-    window.scrollTo({ top: y, behavior: "smooth" });
+    if (posterClicked.id) {
+      const getMovieToChangeIndex = () => {
+        const index = movies.findIndex((movie) => !movie.Title);
+        return index === -1 ? movies.length - 1 : index;
+      };
+      const movieIndexToChange = getMovieToChangeIndex();
+      setMovieToReplace({
+        title: posterClicked.name,
+        key: movies[movieIndexToChange].key,
+      });
+      changeMovie(posterClicked.id, movies[movieIndexToChange].key);
+      const y =
+        // eslint-disable-next-line react/prop-types
+        comparerRef.current.getBoundingClientRect().top +
+        window.pageYOffset +
+        1;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
   }, [posterClicked]);
 
   const removeMovie = (keyToRemove) => {
@@ -88,6 +102,7 @@ const Comaparer = ({ comparerRef }) => {
         getNextKey={addMovieAndReturnKey}
         changeMovie={changeMovie}
         removeMovie={removeMovie}
+        movieToReplace={movieToReplace}
       />
       <Divider hidden />
       <ComparisionTable movies={movies} />
