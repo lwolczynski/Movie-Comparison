@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useContext, useRef } from "react";
+import React, { useContext } from "react";
 import { Image, Card } from "semantic-ui-react";
 import Slider from "react-slick";
 import carouselData from "./carouselData";
@@ -18,33 +18,31 @@ const Poster = ({ item }) => {
   );
 };
 
+const selected = carouselData.sort(() => 0.5 - Math.random()).slice(0, 15);
+
+const settings = {
+  infinite: true,
+  centerMode: true,
+  autoplay: true,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  variableWidth: true,
+  autoplaySpeed: 3000,
+  nextArrow: <></>,
+  prevArrow: <></>,
+  cssEase: "linear",
+};
+
 // eslint-disable-next-line react/display-name
-const Carousel = React.memo(() => {
-  const selected = useRef(
-    carouselData.sort(() => 0.5 - Math.random()).slice(0, 15)
-  );
-
-  const settings = useRef({
-    infinite: true,
-    centerMode: true,
-    autoplay: true,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    variableWidth: true,
-    autoplaySpeed: 3000,
-    nextArrow: <></>,
-    prevArrow: <></>,
-    cssEase: "linear",
-  });
-
+const Carousel = () => {
   const generateCards = () =>
-    selected.current.map((item, index) => (
+    selected.map((item, index) => (
       <div className="carousel-div" key={index}>
         <Poster item={{ ...item }} />
       </div>
     ));
 
-  return <Slider {...settings.current}>{generateCards()}</Slider>;
-});
+  return <Slider {...settings}>{generateCards()}</Slider>;
+};
 
 export default Carousel;

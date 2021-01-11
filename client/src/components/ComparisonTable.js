@@ -103,7 +103,7 @@ const formatData = (type, data) => {
   }
 };
 
-const printMovieRow = (movie, row, highlight) => {
+const printMovieCell = (movie, row, highlight) => {
   const getCellClasses = () => {
     if (highlight === movie[row.jsonField]) return "full center highlight";
     return "full center";
@@ -119,40 +119,37 @@ const printMovieRow = (movie, row, highlight) => {
   return <Segment className={getCellClasses()}>{getCellText()}</Segment>;
 };
 
-const ComparisionTable = ({ movies }) => {
-  const printFirstColumn = (row) => (
-    <Grid.Column>
-      <div className="full center">
-        <Header as="h3">{row.name}</Header>
-      </div>
+const printFirstColumn = (row) => (
+  <Grid.Column>
+    <div className="full center">
+      <Header as="h3">{row.name}</Header>
+    </div>
+  </Grid.Column>
+);
+
+const printMovieColumns = (movies, row) => {
+  const highlight = row.maxFinder
+    ? row.maxFinder(movies.map((movie) => movie[row.jsonField]))
+    : null;
+  return movies.map((movie, index) => (
+    <Grid.Column key={index}>
+      {printMovieCell(movie, row, highlight)}
     </Grid.Column>
-  );
-
-  const printMovieColumns = (row) => {
-    const highlight = row.maxFinder
-      ? row.maxFinder(movies.map((movie) => movie[row.jsonField]))
-      : null;
-    console.log(highlight);
-    return movies.map((movie, index) => (
-      <Grid.Column key={index}>
-        {printMovieRow(movie, row, highlight)}
-      </Grid.Column>
-    ));
-  };
-
-  const printRows = () =>
-    rows.map((row, index) => (
-      <Grid.Row key={index}>
-        {printFirstColumn(row)}
-        {printMovieColumns(row)}
-      </Grid.Row>
-    ));
-
-  return (
-    <Container>
-      <Grid columns={movies.length + 1}>{printRows()}</Grid>
-    </Container>
-  );
+  ));
 };
+
+const printRows = (movies) =>
+  rows.map((row, index) => (
+    <Grid.Row key={index}>
+      {printFirstColumn(row)}
+      {printMovieColumns(movies, row)}
+    </Grid.Row>
+  ));
+
+const ComparisionTable = ({ movies }) => (
+  <Container>
+    <Grid columns={movies.length + 1}>{printRows(movies)}</Grid>
+  </Container>
+);
 
 export default ComparisionTable;

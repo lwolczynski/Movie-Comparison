@@ -51,14 +51,12 @@ const Comaparer = ({ scrollToMain }) => {
   const changeMovie = async (movie, key) => {
     const data = await getMovieData(movie);
     setMovies(
-      movies.reduce((acc, curr) => {
-        if (curr.key === key) {
-          acc.push({ ...data, key });
-        } else {
-          acc.push({ ...curr });
+      movies.map((el) => {
+        if (el.key === key) {
+          return { ...data, key };
         }
-        return acc;
-      }, [])
+        return { ...el };
+      })
     );
   };
 
@@ -79,7 +77,6 @@ const Comaparer = ({ scrollToMain }) => {
   }, [posterClicked]);
 
   const removeMovie = (keyToRemove) => {
-    // eslint-disable-next-line radix
     setMovies(
       movies.reduce((acc, curr) => {
         if (curr.key !== keyToRemove) {

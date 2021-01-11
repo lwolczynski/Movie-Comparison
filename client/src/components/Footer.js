@@ -13,4 +13,4 @@ const Footer = () => (
   </Segment>
 );
 
-export default Footer;
+export default React.memo(Footer);
