@@ -2,6 +2,20 @@
 import React from "react";
 import { Container, Grid, Segment, Header, Image } from "semantic-ui-react";
 
+const findMaxRate = (arr) => {
+  const parsedArr = arr.map((el) => parseFloat(el) || 0);
+  return arr[parsedArr.indexOf(Math.max(...parsedArr))] || "";
+};
+
+const findBoxOffice = (arr) => {
+  const parsedArr = arr.map((el) => {
+    if (el && el !== "N/A")
+      return parseFloat(el.replace("$", "").replaceAll(",", ""));
+    return 0;
+  });
+  return arr[parsedArr.indexOf(Math.max(...parsedArr))] || "";
+};
+
 const rows = [
   { name: "Title", jsonField: "Title" },
   { name: "Poster", jsonField: "Poster" },
@@ -26,15 +40,18 @@ const rows = [
   {
     name: "IMDB score",
     jsonField: "IMDBScore",
+    maxFinder: findMaxRate,
   },
   {
     name: "Rotten Tomatoes score",
     jsonField: "RTScore",
+    maxFinder: findMaxRate,
   },
-  { name: "Metascore", jsonField: "Metascore" },
+  { name: "Metascore", jsonField: "Metascore", maxFinder: findMaxRate },
   {
     name: "Box Office",
     jsonField: "BoxOffice",
+    maxFinder: findBoxOffice,
   },
   {
     name: "Rated",
@@ -86,13 +103,20 @@ const formatData = (type, data) => {
   }
 };
 
-const printMovieRow = (movie, row) => {
-  if (movie.Title) {
-    return movie[row.jsonField]
-      ? formatData(row.jsonField, movie[row.jsonField])
-      : "N/A";
-  }
-  return null;
+const printMovieRow = (movie, row, highlight) => {
+  const getCellClasses = () => {
+    if (highlight === movie[row.jsonField]) return "full center highlight";
+    return "full center";
+  };
+  const getCellText = () => {
+    if (movie.Title) {
+      return movie[row.jsonField]
+        ? formatData(row.jsonField, movie[row.jsonField])
+        : "N/A";
+    }
+    return null;
+  };
+  return <Segment className={getCellClasses()}>{getCellText()}</Segment>;
 };
 
 const ComparisionTable = ({ movies }) => {
@@ -104,12 +128,17 @@ const ComparisionTable = ({ movies }) => {
     </Grid.Column>
   );
 
-  const printMovieColumns = (row) =>
-    movies.map((movie, index) => (
+  const printMovieColumns = (row) => {
+    const highlight = row.maxFinder
+      ? row.maxFinder(movies.map((movie) => movie[row.jsonField]))
+      : null;
+    console.log(highlight);
+    return movies.map((movie, index) => (
       <Grid.Column key={index}>
-        <Segment className="full center">{printMovieRow(movie, row)}</Segment>
+        {printMovieRow(movie, row, highlight)}
       </Grid.Column>
     ));
+  };
 
   const printRows = () =>
     rows.map((row, index) => (

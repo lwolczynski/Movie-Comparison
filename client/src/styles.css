@@ -115,6 +115,10 @@ code {
   text-transform: uppercase !important;
 }
 
+.highlight {
+  background-color: #dbf8df !important;
+}
+
 
 /* Responsiveness for the table */
 /* below 768px; 768px - 991px; 992px - 1200px; above 1200px */
