@@ -45,6 +45,7 @@ code {
 .ui.borderless {
   border-left: none !important;
   border-right: none !important;
+  border-radius: 0 !important;
 }
 
 .ui.input.focus>input, .ui.input>input:focus {
