@@ -7,8 +7,10 @@ import React, {
   useRef,
   useCallback,
   createRef,
+  useContext,
 } from "react";
 import { Search, Grid } from "semantic-ui-react";
+import PosterContext from "./PosterContext";
 
 const initialState = {
   loading: false,
@@ -50,13 +52,15 @@ const resultRenderer = ({ title, type, year, poster }) => (
 );
 
 const Autocomplete = ({
-  changeMovie,
   explicitKey,
-  movieToReplace,
+  replaceIfPosterCliked,
+  movieAdmin,
   children,
 }) => {
   const [state, dispatch] = useReducer(searchReducer, initialState);
   const { loading, results, value } = state;
+
+  const { posterClicked } = useContext(PosterContext);
 
   const timeoutRef = useRef();
 
@@ -89,10 +93,14 @@ const Autocomplete = ({
     });
   };
 
-  // eslint-disable-next-line no-unused-vars
   const handleForcedSearchChange = useCallback(async (e, dt) => {
     clearTimeout(timeoutRef.current);
     dispatch({ type: "CHANGE_SEARCH", query: dt.value });
+    movieAdmin({
+      type: "FORCE_MOVIE",
+      id: dt.id,
+      key: explicitKey,
+    });
 
     mainSearchPart(dt);
   }, []);
@@ -111,12 +119,17 @@ const Autocomplete = ({
     }, 500);
   }, []);
 
+  const isInitialMount = useRef(true);
+
   useEffect(() => {
-    if (movieToReplace && explicitKey === movieToReplace.key)
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+    } else if (replaceIfPosterCliked)
       handleForcedSearchChange(searchRef.current, {
-        value: movieToReplace.title,
+        value: posterClicked.name,
+        id: posterClicked.id,
       });
-  }, [movieToReplace]);
+  }, [posterClicked]);
 
   useEffect(() => {
     clearTimeout(timeoutRef.current);
@@ -134,7 +147,11 @@ const Autocomplete = ({
                 type: "UPDATE_SELECTION",
                 selection: data.result.title,
               });
-              changeMovie(data.result.imdbid, explicitKey);
+              movieAdmin({
+                type: "CHANGE_MOVIE",
+                id: data.result.imdbid,
+                key: explicitKey,
+              });
             }}
             onSearchChange={handleSearchChange}
             resultRenderer={resultRenderer}

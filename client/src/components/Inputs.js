@@ -1,35 +1,31 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from "react";
+import React from "react";
 import { Container, Segment, Button, Grid, Header } from "semantic-ui-react";
 import Autocomplete from "./Autocomplete";
 
-const Inputs = ({ getNextKey, changeMovie, removeMovie, movieToReplace }) => {
-  const [keys, setKeys] = useState([0, 1]);
-
+const Inputs = ({ movies, replaceOnPosterClick, movieAdmin }) => {
   const handleAddClick = () => {
-    const nextKey = getNextKey();
-    setKeys([...keys, nextKey]);
+    movieAdmin({ type: "ADD_MOVIE" });
   };
 
   const handleRemoveClick = (keyToRemove) => {
-    setKeys(keys.filter((key) => key !== keyToRemove));
-    removeMovie(keyToRemove);
+    movieAdmin({ type: "REMOVE_MOVIE", key: keyToRemove });
   };
 
   const renderInputs = () =>
-    keys.map((key) => (
+    movies.map((movie) => (
       <Autocomplete
-        changeMovie={changeMovie}
-        key={key}
-        explicitKey={key}
-        movieToReplace={movieToReplace}
+        key={movie.key}
+        explicitKey={movie.key}
+        replaceIfPosterCliked={replaceOnPosterClick === movie.key}
+        movieAdmin={movieAdmin}
       >
         <Button
           circular
           className="no-background"
           icon="delete"
-          onClick={() => handleRemoveClick(key)}
-          disabled={keys.length <= 1}
+          onClick={() => handleRemoveClick(movie.key)}
+          disabled={movies.length <= 1}
         />
       </Autocomplete>
     ));
@@ -41,14 +37,14 @@ const Inputs = ({ getNextKey, changeMovie, removeMovie, movieToReplace }) => {
           <Grid.Row className="no-padding-bottom">
             <Grid.Column>
               <Header as="h3">
-                Search for {keys.length === 1 ? "a movie" : "movies"}
+                Search for {movies.length === 1 ? "a movie" : "movies"}
               </Header>
             </Grid.Column>
           </Grid.Row>
           {renderInputs()}
           <Grid.Row>
             <Grid.Column>
-              <Button onClick={handleAddClick} disabled={keys.length >= 4}>
+              <Button onClick={handleAddClick} disabled={movies.length >= 4}>
                 Add another movie
               </Button>
             </Grid.Column>

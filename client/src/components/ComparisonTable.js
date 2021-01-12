@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
-import React from "react";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 import { Container, Grid, Segment, Header, Image } from "semantic-ui-react";
 
 const findMaxRate = (arr) => {
@@ -146,10 +147,86 @@ const printRows = (movies) =>
     </Grid.Row>
   ));
 
-const ComparisionTable = ({ movies }) => (
-  <Container>
-    <Grid columns={movies.length + 1}>{printRows(movies)}</Grid>
-  </Container>
-);
+const getMovieData = async (movie) => {
+  const { data } = await axios.get(
+    `http://localhost:${process.env.REACT_APP_PORT}/get`,
+    {
+      params: { id: movie },
+    }
+  );
+  const RTScore = data.Ratings.find((o) => o.Source === "Rotten Tomatoes")
+    ? data.Ratings.find((o) => o.Source === "Rotten Tomatoes").Value
+    : undefined;
+  const Metascore = data.Ratings.find((o) => o.Source === "Metacritic")
+    ? data.Ratings.find((o) => o.Source === "Metacritic").Value
+    : undefined;
+  const IMDBScore = data.Ratings.find(
+    (o) => o.Source === "Internet Movie Database"
+  )
+    ? data.Ratings.find((o) => o.Source === "Internet Movie Database").Value
+    : undefined;
+  const modifiedData = {
+    ...data,
+    RTScore,
+    Metascore,
+    IMDBScore,
+    IMDBLink: `https://www.imdb.com/title/${movie}`,
+  };
+  return modifiedData;
+};
+
+const addMovie = (movies, nextKey) => [
+  ...movies.map((obj) => ({ ...obj })),
+  { key: nextKey },
+];
+
+const changeMovie = async (movies, id, key) => {
+  const data = await getMovieData(id);
+  return [
+    ...movies.map((el) => {
+      if (el.key === key) {
+        return { ...data, key };
+      }
+      return { ...el };
+    }),
+  ];
+};
+
+const removeMovie = (movies, keyToRemove) => [
+  ...movies.reduce((acc, curr) => {
+    if (curr.key !== keyToRemove) {
+      acc.push({ ...curr });
+    }
+    return acc;
+  }, []),
+];
+
+const ComparisionTable = ({ lastAction }) => {
+  const [movieDetails, setMovieDetails] = useState([{ key: 0 }, { key: 1 }]);
+
+  useEffect(async () => {
+    switch (lastAction.type) {
+      case "ADD":
+        setMovieDetails(addMovie(movieDetails, lastAction.key));
+        break;
+      case "CHANGE":
+      case "FORCE":
+        setMovieDetails(
+          await changeMovie(movieDetails, lastAction.movieId, lastAction.key)
+        );
+        break;
+      case "REMOVE":
+        setMovieDetails(removeMovie(movieDetails, lastAction.key));
+        break;
+      default:
+    }
+  }, [lastAction]);
+
+  return (
+    <Container>
+      <Grid columns={movieDetails.length + 1}>{printRows(movieDetails)}</Grid>
+    </Container>
+  );
+};
 
 export default ComparisionTable;
