@@ -204,22 +204,25 @@ const removeMovie = (movies, keyToRemove) => [
 const ComparisionTable = ({ lastAction }) => {
   const [movieDetails, setMovieDetails] = useState([{ key: 0 }, { key: 1 }]);
 
-  useEffect(async () => {
-    switch (lastAction.type) {
-      case "ADD":
-        setMovieDetails(addMovie(movieDetails, lastAction.key));
-        break;
-      case "CHANGE":
-      case "FORCE":
-        setMovieDetails(
-          await changeMovie(movieDetails, lastAction.movieId, lastAction.key)
-        );
-        break;
-      case "REMOVE":
-        setMovieDetails(removeMovie(movieDetails, lastAction.key));
-        break;
-      default:
+  useEffect(() => {
+    async function run(action) {
+      switch (lastAction.type) {
+        case "ADD":
+          setMovieDetails(addMovie(movieDetails, action.key));
+          break;
+        case "CHANGE":
+        case "FORCE":
+          setMovieDetails(
+            await changeMovie(movieDetails, action.movieId, action.key)
+          );
+          break;
+        case "REMOVE":
+          setMovieDetails(removeMovie(movieDetails, action.key));
+          break;
+        default:
+      }
     }
+    run(lastAction);
   }, [lastAction]);
 
   return (
