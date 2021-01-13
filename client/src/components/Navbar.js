@@ -3,7 +3,7 @@ import { Menu, Container, Image, Sticky } from "semantic-ui-react";
 
 // eslint-disable-next-line react/prop-types
 const Navbar = ({ mainRef, scrollToMain }) => (
-  <Sticky context={mainRef} offset={-1}>
+  <Sticky as="nav" context={mainRef} offset={-1}>
     <Menu borderless>
       <Container className="center">
         <Menu.Item onClick={scrollToMain}>

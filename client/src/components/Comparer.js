@@ -83,7 +83,7 @@ const Comaparer = ({ scrollToMain }) => {
   }, [lastAction]);
 
   return (
-    <>
+    <main>
       <Divider hidden />
       <Inputs
         movies={movies}
@@ -93,7 +93,7 @@ const Comaparer = ({ scrollToMain }) => {
       <Divider hidden />
       <ComparisionTable lastAction={lastAction} />
       <Divider hidden />
-    </>
+    </main>
   );
 };
 

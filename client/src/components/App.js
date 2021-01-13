@@ -13,15 +13,14 @@ const App = () => {
   const [posterClicked, setPosterClicked] = useState({});
 
   return (
-    <div ref={mainRef}>
+    <div id="content" ref={mainRef}>
       <PosterContext.Provider value={{ posterClicked, setPosterClicked }}>
         <Top />
-        <div ref={comparerRef}>
-          <Navbar
-            mainRef={mainRef}
-            scrollToMain={() => scrollToElement(comparerRef.current)}
-          />
-        </div>
+        <div id="sticky-ref" ref={comparerRef}></div>
+        <Navbar
+          mainRef={mainRef}
+          scrollToMain={() => scrollToElement(comparerRef.current)}
+        />
         <Comparer scrollToMain={() => scrollToElement(comparerRef.current)} />
       </PosterContext.Provider>
       <Footer />

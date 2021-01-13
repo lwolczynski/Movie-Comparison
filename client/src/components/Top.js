@@ -3,7 +3,7 @@ import { Header, Container, Divider } from "semantic-ui-react";
 import Carousel from "./Carousel";
 
 const Top = () => (
-  <Container>
+  <Container as="header">
     <Divider hidden />
     <Header as="h1" className="brand">
       Pick-a-mov
