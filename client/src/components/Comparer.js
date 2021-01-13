@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useReducer } from "react";
 import { Divider } from "semantic-ui-react";
 import Inputs from "./Inputs";
@@ -73,7 +72,6 @@ const moviesReducer = (state, action) => {
   }
 };
 
-// eslint-disable-next-line react/prop-types
 const Comaparer = ({ scrollToMain }) => {
   const [state, dispatch] = useReducer(moviesReducer, initialState);
   const { movies, replaceOnPosterClick, lastAction } = state;

@@ -6,5 +6,4 @@ import "./styles.css";
 
 import App from "./components/App";
 
-// eslint-disable-next-line no-undef
 ReactDOM.render(<App />, document.querySelector("#root"));

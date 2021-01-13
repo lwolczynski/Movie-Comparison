@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-undef */
 import axios from "axios";
 import React, {
   useEffect,

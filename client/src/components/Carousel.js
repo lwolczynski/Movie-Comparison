@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { useContext } from "react";
 import { Image, Card } from "semantic-ui-react";
 import Slider from "react-slick";
@@ -8,7 +7,6 @@ import PosterContext from "./PosterContext";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-// eslint-disable-next-line react/display-name
 const Poster = ({ item }) => {
   const { setPosterClicked } = useContext(PosterContext);
   return (
@@ -33,7 +31,6 @@ const settings = {
   cssEase: "linear",
 };
 
-// eslint-disable-next-line react/display-name
 const Carousel = () => {
   const generateCards = () =>
     selected.map((item, index) => (

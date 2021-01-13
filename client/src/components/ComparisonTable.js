@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Container, Grid, Segment, Header, Image } from "semantic-ui-react";
@@ -99,7 +98,6 @@ const formatData = (type, data) => {
       return <Image src={data} />;
     case "IMDBLink":
       return (
-        // eslint-disable-next-line react/jsx-no-target-blank
         <a style={{ display: "table-cell" }} href={data} target="_blank">
           See on IMDB
         </a>
