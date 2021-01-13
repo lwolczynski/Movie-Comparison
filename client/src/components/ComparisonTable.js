@@ -2,6 +2,11 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Container, Grid, Segment, Header, Image } from "semantic-ui-react";
+import {
+  addObj as addMovie,
+  changeObj as changeMovie,
+  removeObj as removeMovie,
+} from "../utils/objectOps";
 
 const findMaxRate = (arr) => {
   const parsedArr = arr.map((el) => parseFloat(el) || 0);
@@ -175,32 +180,6 @@ const getMovieData = async (movie) => {
   return modifiedData;
 };
 
-const addMovie = (movies, nextKey) => [
-  ...movies.map((obj) => ({ ...obj })),
-  { key: nextKey },
-];
-
-const changeMovie = async (movies, id, key) => {
-  const data = await getMovieData(id);
-  return [
-    ...movies.map((el) => {
-      if (el.key === key) {
-        return { ...data, key };
-      }
-      return { ...el };
-    }),
-  ];
-};
-
-const removeMovie = (movies, keyToRemove) => [
-  ...movies.reduce((acc, curr) => {
-    if (curr.key !== keyToRemove) {
-      acc.push({ ...curr });
-    }
-    return acc;
-  }, []),
-];
-
 const ComparisionTable = ({ lastAction }) => {
   const [movieDetails, setMovieDetails] = useState([{ key: 0 }, { key: 1 }]);
 
@@ -211,11 +190,11 @@ const ComparisionTable = ({ lastAction }) => {
           setMovieDetails(addMovie(movieDetails, action.key));
           break;
         case "CHANGE":
-        case "FORCE":
-          setMovieDetails(
-            await changeMovie(movieDetails, action.movieId, action.key)
-          );
+        case "FORCE": {
+          const data = await getMovieData(action.movieId);
+          setMovieDetails(changeMovie(movieDetails, data, action.key));
           break;
+        }
         case "REMOVE":
           setMovieDetails(removeMovie(movieDetails, action.key));
           break;

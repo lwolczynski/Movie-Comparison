@@ -3,6 +3,10 @@ import React, { useEffect, useReducer } from "react";
 import { Divider } from "semantic-ui-react";
 import Inputs from "./Inputs";
 import ComparisionTable from "./ComparisonTable";
+import {
+  addObj as addMovie,
+  removeObj as removeMovie,
+} from "../utils/objectOps";
 
 const initialState = {
   movies: [{ key: 0 }, { key: 1 }],
@@ -11,11 +15,6 @@ const initialState = {
   replaceOnPosterClick: 0, // key of movie to be replaced
 };
 
-const addMovie = (movies, nextKey) => [
-  ...movies.map((obj) => ({ ...obj })),
-  { key: nextKey },
-];
-
 const changeMovie = (movies, id, key) => [
   ...movies.map((el) => {
     if (el.key === key) {
@@ -23,15 +22,6 @@ const changeMovie = (movies, id, key) => [
     }
     return { ...el };
   }),
-];
-
-const removeMovie = (movies, keyToRemove) => [
-  ...movies.reduce((acc, curr) => {
-    if (curr.key !== keyToRemove) {
-      acc.push({ ...curr });
-    }
-    return acc;
-  }, []),
 ];
 
 const getMovieToChangeIndex = (movies) => {
