@@ -7,7 +7,7 @@ import ComparisionTable from "./ComparisonTable";
 const initialState = {
   movies: [{ key: 0 }, { key: 1 }],
   nextKey: 2,
-  lastAction: { action: "IDLE" },
+  lastAction: { type: "IDLE" },
   replaceOnPosterClick: 0, // key of movie to be replaced
 };
 
