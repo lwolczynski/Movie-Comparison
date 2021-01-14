@@ -1,6 +1,13 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { Container, Grid, Segment, Header, Image } from "semantic-ui-react";
+import {
+  Container,
+  Grid,
+  Segment,
+  Header,
+  Image,
+  Button,
+} from "semantic-ui-react";
 import {
   addObj as addMovie,
   changeObj as changeMovie,
@@ -98,9 +105,13 @@ const formatData = (type, data) => {
       return <Image src={data} />;
     case "IMDBLink":
       return (
-        <a style={{ display: "table-cell" }} href={data} target="_blank">
-          See on IMDB
-        </a>
+        <Button
+          as="a"
+          href={data}
+          target="_blank"
+          icon="external"
+          content="IMDB"
+        />
       );
     default:
       return <span>{data}</span>;
