@@ -15,6 +15,7 @@
     "semantic-ui-react": "^2.0.1",
     "slick-carousel": "^1.8.1",
     "smoothscroll-polyfill": "^0.4.4",
+    "styled-components": "^5.2.1",
     "web-vitals": "^0.2.4"
   },
   "scripts": {

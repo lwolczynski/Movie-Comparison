@@ -215,7 +215,9 @@ const ComparisionTable = ({ lastAction }) => {
 
   return (
     <Container>
-      <Grid columns={movieDetails.length + 1}>{printRows(movieDetails)}</Grid>
+      <Grid className="styled" columns={movieDetails.length + 1}>
+        {printRows(movieDetails)}
+      </Grid>
     </Container>
   );
 };

@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import styled from "styled-components";
 import { Image, Card } from "semantic-ui-react";
 import Slider from "react-slick";
 import carouselData from "./carouselData";
@@ -6,6 +7,12 @@ import PosterContext from "./PosterContext";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+
+const StyledSlider = styled(Slider)`
+  .slick-track {
+    display: flex;
+  }
+`;
 
 const Poster = ({ item }) => {
   const { setPosterClicked } = useContext(PosterContext);
@@ -39,7 +46,7 @@ const Carousel = () => {
       </div>
     ));
 
-  return <Slider {...settings}>{generateCards()}</Slider>;
+  return <StyledSlider {...settings}>{generateCards()}</StyledSlider>;
 };
 
 export default Carousel;

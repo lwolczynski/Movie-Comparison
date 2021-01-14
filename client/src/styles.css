@@ -35,7 +35,7 @@ code {
 }
 
 .ui.search > .results {
-  width: 100% !important;
+  width: 100%;
 }
 
 .ui.search > .results > .result > .image > img {
@@ -43,9 +43,9 @@ code {
 }
 
 .ui.borderless {
-  border-left: none !important;
-  border-right: none !important;
-  border-radius: 0 !important;
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
 }
 
 .ui.input.focus>input, .ui.input>input:focus {
@@ -54,13 +54,6 @@ code {
 
 .ui.sticky {
   z-index: 999;
-}
-
-
-/* Changes to Slick */
-
-.slick-track {
-  display: flex !important;
 }
 
 
@@ -86,14 +79,6 @@ code {
   padding: 5px;
 }
 
-.no-padding-bottom {
-  padding-bottom: 0 !important;
-}
-
-.no-background {
-  background: none !important;
-}
-
 .full {
   height: 100%;
   width: 100%;
@@ -106,45 +91,57 @@ code {
   align-items: center;
 }
 
-.brand {
-  font-family: 'motion_picture_ratingsregular' !important;
-  font-weight: 400 !important;
-  font-size: 2.5rem !important;
-  text-transform: uppercase !important;
+
+/* Custom styles applied to Semantic UI elements with own class names */
+
+.ui.grid>.row.no-padding-bottom {
+  padding-bottom: 0;
 }
 
-.highlight {
-  background-color: #dbf8df !important;
+.ui.button.no-background {
+  background: none;
+}
+
+.ui.brand {
+  font-family: 'motion_picture_ratingsregular';
+  font-weight: 400;
+  font-size: 2.5rem;
+  text-transform: uppercase;
+}
+
+.ui.segment.highlight {
+  background-color: #dbf8df;
 }
 
 
 /* Responsiveness for the table */
 /* below 768px; 768px - 991px; 992px - 1200px; above 1200px */
+/* Own class 'styled' added */
 
-.ui.grid>.row>.column {
-  width: 100% !important;
+.ui.grid.styled>.row>.column {
+  width: 100%;
 }
 
 @media (min-width: 768px) {
-  .ui.grid.two>.row>.column {
-    width: 50% !important;
+  .ui.two.column.grid.styled>.row>.column {
+    width: 50%;
   }
 }
 
 @media (min-width: 768px) {
-  .ui.grid.three>.row>.column {
-    width: 33.33333333% !important;
+  .ui.three.column.grid.styled>.row>.column {
+    width: 33.33333333%;
   }
 }
 
 @media (min-width: 768px) {
-  .ui.grid.four>.row>.column {
-    width: 25% !important;
+  .ui.four.column.grid.styled>.row>.column {
+    width: 25%;
   }
 }
 
 @media (min-width: 992px) {
-  .ui.grid.five>.row>.column {
-    width: 20% !important;
+  .ui.five.column.grid.styled>.row>.column {
+    width: 20%;
   }
 }
