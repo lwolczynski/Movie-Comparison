@@ -28,6 +28,7 @@ const findBoxOffice = (arr) => {
   return arr[parsedArr.indexOf(Math.max(...parsedArr))] || "";
 };
 
+// Fields expected to get based on the API documentation
 const rows = [
   { name: "Title", jsonField: "Title" },
   { name: "Poster", jsonField: "Poster" },
@@ -94,6 +95,7 @@ const rows = [
   },
 ];
 
+// Display format based on field name
 const formatData = (type, data) => {
   switch (type) {
     case "Title":
@@ -168,6 +170,7 @@ const getMovieData = async (movie) => {
       params: { id: movie },
     }
   );
+  // Below modifications used to simplify movie rendering
   const RTScore = data.Ratings.find((o) => o.Source === "Rotten Tomatoes")
     ? data.Ratings.find((o) => o.Source === "Rotten Tomatoes").Value
     : undefined;

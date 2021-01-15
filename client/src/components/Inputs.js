@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Segment, Button, Grid, Header } from "semantic-ui-react";
 import Autocomplete from "./Autocomplete";
 
+// Component keeping movie search inputs
 const Inputs = ({ movies, replaceOnPosterClick, movieAdmin }) => {
   const handleAddClick = () => {
     movieAdmin({ type: "ADD_MOVIE" });

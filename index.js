@@ -8,6 +8,7 @@ const port = process.env.PORT;
 
 app.use(cors())
 
+// Get movie details based in IMDB tt
 app.get('/get', async (req, res) => {
   const { data } = await axios.get(process.env.PROVIDER, {
     params: {
@@ -18,6 +19,7 @@ app.get('/get', async (req, res) => {
   res.json(data);
 });
 
+// Get movies matching the searched title
 app.get('/search', async (req, res) => {
   const { data } = await axios.get(process.env.PROVIDER, {
     params: {
