@@ -6,7 +6,7 @@ const Top = () => (
   <Container as="header">
     <Divider hidden />
     <Header as="h1" className="brand">
-      Pick-a-mov
+      Pick-A-Mov
     </Header>
     <Carousel />
     <p className="p-landing">
