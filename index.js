@@ -3,10 +3,17 @@ require('dotenv').config()
 const express = require('express')
 const axios = require('axios')
 const cors = require('cors')
+var path = require('path')
 const app = express();
 const port = process.env.PORT;
 
 app.use(cors())
+
+app.use(express.static(path.join(__dirname, 'client/public')));
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/public', 'index.html'));
+});
 
 // Get movie details based in IMDB tt
 app.get('/get', async (req, res) => {
