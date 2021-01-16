@@ -164,12 +164,9 @@ const printRows = (movies) =>
   ));
 
 const getMovieData = async (movie) => {
-  const { data } = await axios.get(
-    `http://localhost:${process.env.REACT_APP_PORT}/get`,
-    {
-      params: { id: movie },
-    }
-  );
+  const { data } = await axios.get(`/get`, {
+    params: { id: movie },
+  });
   // Below modifications used to simplify movie rendering
   const RTScore = data.Ratings.find((o) => o.Source === "Rotten Tomatoes")
     ? data.Ratings.find((o) => o.Source === "Rotten Tomatoes").Value
